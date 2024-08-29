@@ -1,36 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import DetailsScreen from './src/screens/DetailsScreen';
+import IndexScreen from './src/screens/IndexScreen';
 
-const App = () => {
+const Stack = createNativeStackNavigator();
+const App: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <Text>Margin and Padding Example, Ideally margin of 100 should be applied but only 20 is getting applied</Text>
-      </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="IndexScreen">
+        <Stack.Screen name="IndexScreen" component={IndexScreen} />
+        <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  box: {
-    height: 100,
-    backgroundColor: 'lightblue',
-    // Individual margin
-    marginLeft: 20,
-    marginRight: 20,
-    // Aggregate margin (should override marginLeft & marginRight)
-    marginHorizontal: 100,
-    // Individual padding
-    paddingRight: 10,
-    paddingLeft: 10,
-    // Aggregate padding (should override paddingLeft & paddingRight)
-    paddingHorizontal: 100,
-  },
-});
-
 export default App;
+
+

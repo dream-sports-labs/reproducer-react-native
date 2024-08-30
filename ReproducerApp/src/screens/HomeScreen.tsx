@@ -8,7 +8,7 @@ const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
 
   const renderItem = useCallback(({ item, index }: { item: number; index: number }) => (
-    <Pressable onPress={() => {navigation.navigate('SecondScreen', {})}}>
+    <Pressable onPress={() => {navigation.navigate('DetailsScreen', {})}}>
     <View style={styles.cardStyle}>
       <Text style={styles.itemText}>{item}</Text>
     </View>

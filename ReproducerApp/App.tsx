@@ -1,81 +1,48 @@
-import { useState } from 'react';
-import {
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  FlatList,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {Text, StyleSheet} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 
-export default function App() {
-  const [showOptions, setShowOptions] = useState(false);
-  const [activeCard, setActiveCard] = useState(null);
+const App = () => {
+  // ref
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     bottomSheetRef.current?.snapToIndex(1);
+  //   }, 200);
+  // }, []);
+
+  // renders
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={[0, 1, 2, 3, 4, 5]}
-        renderItem={({ item, index }) => (
-          <View style={styles.card}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                setShowOptions(true);
-                setActiveCard(index);
-              }}
-            >
-              <Text style={styles.buttonText}>Click me</Text>
-            </TouchableOpacity>
-            {showOptions && activeCard === index && (
-              <View style={styles.optionsContainer}></View>
-            )}
-          </View>
-        )}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        contentContainerStyle={styles.listContent}
-      />
-    </SafeAreaView>
+    <GestureHandlerRootView style={styles.container}>
+      <BottomSheet
+        ref={bottomSheetRef}
+        onChange={handleSheetChanges}
+        snapPoints={[100, 300]}>
+        <BottomSheetView style={styles.contentContainer}>
+          <Text>Awesome 🎉</Text>
+        </BottomSheetView>
+      </BottomSheet>
+    </GestureHandlerRootView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    padding: 8,
+    backgroundColor: 'grey',
   },
-  card: {
-    height: 100,
-    width: '100%',
-    backgroundColor: 'green',
-    borderRadius: 8,
-    position: 'relative',
-  },
-  button: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  optionsContainer: {
-    backgroundColor: 'yellow',
-    borderRadius: 8,
-    height: 80,
-    width: '50%',
-    position: 'absolute',
-    top: 80,
-    zIndex: 1
-  },
-  separator: {
-    height: 20,
-  },
-  listContent: {
-    padding: 20,
-    paddingBottom: 100,
+  contentContainer: {
+    flex: 1,
+    padding: 36,
+    alignItems: 'center',
   },
 });
+
+export default App;
